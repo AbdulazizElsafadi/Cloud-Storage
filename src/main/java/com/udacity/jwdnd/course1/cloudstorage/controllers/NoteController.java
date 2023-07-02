@@ -26,7 +26,14 @@ public class NoteController {
 //        System.out.println("note: " + note);
         note.setUserid(user.getUserid());
 
+        if (note.getNotedescription().length() >= 1000) {
+            redirectAttributes.addFlashAttribute("messageCheck", true);
+            redirectAttributes.addFlashAttribute("messageText", "The description must be less than 1000 letters!");
+            return "redirect:/home";
+        }
+
         if (note.getNoteid() == null) {
+
             int noteid = noteService.createNote(note);
 
             if (noteid > 0) {
